@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.ordersspace.android.ui.LoginPage
 import com.ordersspace.android.ui.MenuPage
 import com.ordersspace.android.ui.theme.OrdersSpaceTheme
 
@@ -21,6 +22,9 @@ class MainActivity : ComponentActivity() {
                 ) {
                     composable(route = MenuPage.route) {
                         MenuPage()
+                    }
+                    composable(route = LoginPage.route) {
+                        LoginPage()
                     }
                 }
             }
