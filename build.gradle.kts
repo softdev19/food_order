@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 ext {
     extra["composeVersion"] = "1.2.1"
+    extra["ktorVersion"] = "2.1.2"
 }
 
 plugins {

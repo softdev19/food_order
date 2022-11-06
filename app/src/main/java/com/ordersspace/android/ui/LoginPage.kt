@@ -21,9 +21,14 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Black
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.ordersspace.android.R
+import com.ordersspace.android.model.Client
 import com.ordersspace.android.ui.theme.OrdersSpaceTheme
 import com.ordersspace.android.ui.theme.PurpleGrey40
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Preview(showSystemUi = true, name = "Login page")
 @Composable
@@ -36,7 +41,7 @@ fun LoginPagePreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun LoginPage() {
+fun LoginPage(controller: NavController?=null) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -46,11 +51,11 @@ fun LoginPage() {
     ) {
         val scale by remember { mutableStateOf(1f) }
         Image(
-            painter = painterResource(id = R.drawable.logo),
+            painter = painterResource(id = R.drawable.logot),
             contentDescription = "Orders Space",
-            modifier = Modifier.
-            fillMaxWidth(0.5f).
-            aspectRatio(1.0f)
+            modifier = Modifier
+                .fillMaxWidth(0.5f)
+                .aspectRatio(1.0f)
         )
         Box(modifier = Modifier.height(16.dp))
         Row(
@@ -92,6 +97,12 @@ fun LoginPage() {
         }
         var numb by remember { mutableStateOf("") }
         var code by remember { mutableStateOf("") }
+        var name by remember { mutableStateOf("") }
+        OutlinedTextField(
+            label = { Text(text = "Ваше имя") },
+            value = name,
+            onValueChange = { name = it },
+        )
         OutlinedTextField(
             label = { Text(text = "Номер телефона") },
             value = numb,
@@ -127,7 +138,8 @@ fun LoginPage() {
                         keyboardType = KeyboardType.Phone
                     )
                 )
-                Button(onClick = { /*TODO*/ }) {
+                val scope = rememberCoroutineScope()
+                Button(onClick = { if(controller != null)login(name, numb, null, scope, controller) }) {
                     Text(text = "Войти")
                 }
                 TextButton(onClick = { /*TODO*/ }) {
@@ -137,6 +149,19 @@ fun LoginPage() {
 
         }
 
+    }
+}
+
+fun login(
+    name: String,
+    phone: String?,
+    email: String?,
+    scope: CoroutineScope,
+    controller: NavController,
+) {
+    scope.launch {
+        Client.addUser(name, phone, email)
+        controller.navigate(MenuPage.route)
     }
 }
 

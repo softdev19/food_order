@@ -18,13 +18,13 @@ class MainActivity : ComponentActivity() {
                 val controller = rememberNavController()
                 NavHost(
                     navController = controller,
-                    startDestination = MenuPage.route,
+                    startDestination = LoginPage.route,
                 ) {
                     composable(route = MenuPage.route) {
                         MenuPage()
                     }
                     composable(route = LoginPage.route) {
-                        LoginPage()
+                        LoginPage(controller)
                     }
                 }
             }
