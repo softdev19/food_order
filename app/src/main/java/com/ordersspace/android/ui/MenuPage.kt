@@ -19,9 +19,7 @@ fun MenuPagePreview() {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MenuPage() {
-    Text(text = runBlocking {
-        Client.getUsers().toString()
-    })
+
 }
 
 object MenuPage {

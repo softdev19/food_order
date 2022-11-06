@@ -4,29 +4,21 @@ import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.magnifier
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Black
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight.Companion.Black
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.ordersspace.android.R
 import com.ordersspace.android.model.Client
 import com.ordersspace.android.ui.theme.OrdersSpaceTheme
-import com.ordersspace.android.ui.theme.PurpleGrey40
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -41,7 +33,7 @@ fun LoginPagePreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun LoginPage(controller: NavController?=null) {
+fun LoginPage(controller: NavController? = null) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -49,7 +41,6 @@ fun LoginPage(controller: NavController?=null) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        val scale by remember { mutableStateOf(1f) }
         Image(
             painter = painterResource(id = R.drawable.logot),
             contentDescription = "Orders Space",
@@ -95,9 +86,11 @@ fun LoginPage(controller: NavController?=null) {
                     .background(Color.Black)
             )
         }
-        var numb by remember { mutableStateOf("") }
+
+        var phone by remember { mutableStateOf("") }
         var code by remember { mutableStateOf("") }
         var name by remember { mutableStateOf("") }
+
         OutlinedTextField(
             label = { Text(text = "Ваше имя") },
             value = name,
@@ -105,15 +98,13 @@ fun LoginPage(controller: NavController?=null) {
         )
         OutlinedTextField(
             label = { Text(text = "Номер телефона") },
-            value = numb,
-            onValueChange = { numb = it },
+            value = phone,
+            onValueChange = { phone = it },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Phone
             )
         )
-        var isVisible by remember {
-            mutableStateOf(false)
-        }
+        var isVisible by remember { mutableStateOf(false) }
 
         AnimatedVisibility(!isVisible) {
             Button(
@@ -125,7 +116,6 @@ fun LoginPage(controller: NavController?=null) {
             }
         }
         AnimatedVisibility(isVisible) {
-
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -139,7 +129,15 @@ fun LoginPage(controller: NavController?=null) {
                     )
                 )
                 val scope = rememberCoroutineScope()
-                Button(onClick = { if(controller != null)login(name, numb, null, scope, controller) }) {
+                Button(onClick = {
+                    if (controller != null) login(
+                        name,
+                        phone,
+                        null,
+                        scope,
+                        controller
+                    )
+                }) {
                     Text(text = "Войти")
                 }
                 TextButton(onClick = { /*TODO*/ }) {
