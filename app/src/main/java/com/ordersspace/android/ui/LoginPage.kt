@@ -159,7 +159,7 @@ fun login(
 ) {
     scope.launch {
         Client.addUser(name, phone, email)
-        controller.navigate(MenuPage.route)
+        controller.navigate(MainPage.route)
     }
 }
 

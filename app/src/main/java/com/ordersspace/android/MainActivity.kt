@@ -25,9 +25,6 @@ class MainActivity : ComponentActivity() {
                     navController = controller,
                     startDestination = MainPage.route,
                 ) {
-                    composable(route = MenuPage.route) {
-                        MenuPage()
-                    }
                     composable(route = LoginPage.route) {
                         LoginPage(controller)
                     }
