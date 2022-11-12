@@ -8,9 +8,11 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.Restaurant
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.MenuBook
+import androidx.compose.material.icons.outlined.Restaurant
+import androidx.compose.material.icons.outlined.Store
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.colorResource
@@ -34,28 +36,12 @@ fun MenuPagePreview() {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MenuPage() {
-    Scaffold(topBar = {
-        Text(text = "Меню")
-    }, bottomBar = {
 
-    }) {
-
-    }
 }
 
 object MenuPage {
     const val route = "/menu"
 }
 
-@Composable
-fun BottomNavigationBar() {
-
-}
 
 
-
-@Preview(showBackground = true)
-@Composable
-fun BottomNavigationBarPreview() {
-    BottomNavigationBar()
-}
