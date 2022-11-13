@@ -15,3 +15,4 @@ sealed class NavigationPage(
     object MenuPage : NavigationPage(Icons.Outlined.MenuBook, "Меню", "/menu")
     object ProfilePage : NavigationPage(Icons.Outlined.AccountCircle, "Профиль", "/profile")
 }
+

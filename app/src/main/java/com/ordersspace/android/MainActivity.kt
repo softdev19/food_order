@@ -3,15 +3,13 @@ package com.ordersspace.android
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.datastore.core.DataStore
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.ordersspace.android.ui.AuthPage
 import com.ordersspace.android.ui.LoginPage
 import com.ordersspace.android.ui.MainPage
-import com.ordersspace.android.ui.MenuPage
 import com.ordersspace.android.ui.theme.OrdersSpaceTheme
-import java.util.prefs.Preferences
 
 class MainActivity : ComponentActivity() {
 
@@ -23,7 +21,7 @@ class MainActivity : ComponentActivity() {
                 val controller = rememberNavController()
                 NavHost(
                     navController = controller,
-                    startDestination = MainPage.route,
+                    startDestination = AuthPage.route,
                 ) {
                     composable(route = LoginPage.route) {
                         LoginPage(controller)
@@ -31,8 +29,12 @@ class MainActivity : ComponentActivity() {
                     composable(route = MainPage.route) {
                         MainPage()
                     }
+                    composable(route = AuthPage.route){
+                        AuthPage(controller)
+                    }
+                    }
                 }
             }
         }
     }
-}
+

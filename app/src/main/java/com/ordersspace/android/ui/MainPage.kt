@@ -34,9 +34,7 @@ val pages = listOf(
 fun MainPage() {
     val navController = rememberNavController()
     Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(title = { Text(text = "Meню") })
-        },
+
         bottomBar = { BottomNavigation(navController) },
     ) { padding ->
         Box(modifier = Modifier.padding(padding)) {

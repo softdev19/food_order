@@ -51,6 +51,7 @@ android {
 dependencies {
     val composeVersion: String by rootProject.extra
     val ktorVersion: String by rootProject.extra
+    implementation("io.ktor:ktor-client-auth:$ktorVersion")
     implementation("androidx.compose.material:material-icons-extended:$composeVersion")
     implementation ("androidx.navigation:navigation-compose:$composeVersion")
     implementation("androidx.datastore:datastore-preferences:1.0.0")

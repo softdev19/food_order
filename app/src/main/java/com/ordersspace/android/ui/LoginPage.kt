@@ -52,103 +52,44 @@ fun LoginPage(controller: NavController? = null) {
         Row(
             modifier = Modifier.fillMaxWidth()
         ) {
-            Button(
-                onClick = { /*TODO*/ }, modifier = Modifier.weight(1.0f)
-            ) {
-                Text(text = "Google")
-            }
-            Box(modifier = Modifier.width(16.dp))
-            Button(
-                onClick = { /*TODO*/ }, modifier = Modifier.weight(1.0f)
-            ) {
-                Text(text = "Вконтакте")
-            }
+
         }
 
         Row(
             modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(
-                modifier = Modifier
-                    .height(1.5.dp)
-                    .weight(1.0f)
-                    .background(Color.Black)
-            )
 
-            Text(
-                "или", modifier = Modifier.padding(horizontal = 8.dp)
-            )
-
-            Box(
-                modifier = Modifier
-                    .height(1.5.dp)
-                    .weight(1.0f)
-                    .background(Color.Black)
-            )
         }
 
         var phone by remember { mutableStateOf("") }
-        var code by remember { mutableStateOf("") }
         var name by remember { mutableStateOf("") }
 
         OutlinedTextField(
-            label = { Text(text = "Ваше имя") },
+            label = { Text(text = "Логин") },
             value = name,
             onValueChange = { name = it },
         )
         OutlinedTextField(
-            label = { Text(text = "Номер телефона") },
+            label = { Text(text = "Пароль") },
             value = phone,
             onValueChange = { phone = it },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Phone
-            )
         )
-        var isVisible by remember { mutableStateOf(false) }
-
-        AnimatedVisibility(!isVisible) {
-            Button(
-                onClick = {
-                    isVisible = true
-                }, modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(text = "Получить код в СМС")
-            }
-        }
-        AnimatedVisibility(isVisible) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                OutlinedTextField(
-                    label = { Text(text = "Код из СМС") },
-                    value = code,
-                    onValueChange = { code = it },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Phone
-                    )
-                )
-                val scope = rememberCoroutineScope()
-                Button(onClick = {
-                    if (controller != null) login(
-                        name,
-                        phone,
-                        null,
-                        scope,
-                        controller
-                    )
-                }) {
-                    Text(text = "Войти")
-                }
-                TextButton(onClick = { /*TODO*/ }) {
-                    Text(text = "Получить СМС еще раз")
-                }
-            }
-
+        Button(
+            onClick = {
+            }, modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "Войти")
         }
 
+        Button(
+            onClick = {
+            }, modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "Регистрация")
+        }
     }
 }
+
 
 fun login(
     name: String,
