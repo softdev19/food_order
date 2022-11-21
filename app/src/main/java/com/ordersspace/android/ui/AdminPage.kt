@@ -147,7 +147,7 @@ fun AdminPage(controller: NavController? = null) {
             {
                 Text(
                     "Отправить на проверку",
-                    fontSize = 25.sp,
+                    fontSize = 20.sp,
                 )
 
             }
