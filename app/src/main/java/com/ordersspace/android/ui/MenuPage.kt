@@ -67,6 +67,7 @@ fun ChoosingPlace() {
                 }
                 Button(onClick = { /*TODO*/ }) {
                     Icon(Icons.Outlined.ShoppingBag, null)
+                    Text(text = "Загрузить")
                 }
             }
         }
