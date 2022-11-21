@@ -8,6 +8,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.DragInteraction
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ListAlt
+import androidx.compose.material.icons.filled.RestaurantMenu
 import androidx.compose.material.icons.filled.Upload
 import androidx.compose.material.icons.outlined.Map
 import androidx.compose.material.icons.outlined.Restaurant
@@ -17,6 +19,7 @@ import androidx.compose.material3.IconButtonDefaults.iconButtonColors
 import androidx.compose.material3.ListItemDefaults.contentColor
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.AlignmentLine
@@ -27,6 +30,7 @@ import androidx.navigation.NavController
 import com.ordersspace.android.R
 import com.ordersspace.android.ui.theme.OrdersSpaceTheme
 import io.ktor.http.*
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Preview(showSystemUi = true, name = "Admin page")
 @Composable
@@ -40,11 +44,35 @@ fun AdminPagePreview() {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun AdminPage(controller: NavController? = null) {
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(title = { Text(text = "Информация о ресторане") })
-        },
-    ) {
+    Scaffold(topBar = {
+        CenterAlignedTopAppBar(title = { Text(text = "Информация о ресторане") })
+    }, bottomBar = {
+        BottomAppBar(modifier = Modifier.fillMaxWidth()) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(155.dp)
+                )
+                Icon(Icons.Filled.RestaurantMenu, null)
+                Box(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(20.dp)
+                )
+                Icon(Icons.Filled.ListAlt, null)
+                Box(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(155.dp)
+                )
+            }
+
+        }
+    }) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -126,11 +154,11 @@ fun AdminPage(controller: NavController? = null) {
             )
 
 
-                    var docs by remember { mutableStateOf("") }
-                    Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
-                        Icon(Icons.Filled.Upload, null,)
-                        Text("Загрузить Документы")
-                    }
+            var docs by remember { mutableStateOf("") }
+            Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
+                Icon(Icons.Filled.Upload, null)
+                Text("Загрузить Документы")
+            }
 
 
             Box(
@@ -143,8 +171,7 @@ fun AdminPage(controller: NavController? = null) {
                 modifier = Modifier.fillMaxWidth(),
                 onClick = { /*TODO*/ },
 
-            )
-            {
+                ) {
                 Text(
                     "Отправить на проверку",
                     fontSize = 20.sp,
@@ -152,9 +179,10 @@ fun AdminPage(controller: NavController? = null) {
 
             }
 
-    }
+        }
     }
 }
+
 object AdminPage {
     const val route = "/login"
 }
