@@ -48,7 +48,7 @@ fun BottomNavigation(navController: NavHostController) {
     BottomAppBar {
         val backStackEntry by navController.currentBackStackEntryAsState()
         val route = backStackEntry?.destination?.route
-        pages.forEach {
+        pages.forEach { it ->
             NavigationBarItem(
                 icon = { Icon(it.icon, null) },
                 label = { Text(it.title) },
@@ -81,6 +81,9 @@ fun Navigation(navController: NavHostController) {
         }
         composable(NavigationPage.ProfilePage.route) {
             ProfilePage()
+        }
+        composable(NavigationPage.AdminMenuPage.route) {
+            AdminMenuPage()
         }
     }
 }
