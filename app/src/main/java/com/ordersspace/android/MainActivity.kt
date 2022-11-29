@@ -7,6 +7,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ordersspace.android.ui.*
+import com.ordersspace.android.ui.customer.CustomerMain
+import com.ordersspace.android.ui.navigation.CustomerRoutes
 import com.ordersspace.android.ui.theme.OrdersSpaceTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,8 +21,11 @@ class MainActivity : ComponentActivity() {
                 val controller = rememberNavController()
                 NavHost(
                     navController = controller,
-                    startDestination = AdminMenuPage.route,
+                    startDestination = CustomerRoutes.main,
                 ) {
+                    composable(route = CustomerRoutes.main) {
+                        CustomerMain(controller)
+                    }
                     composable(route = LoginPage.route) {
                         LoginPage(controller)
                     }

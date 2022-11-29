@@ -48,7 +48,7 @@ fun BottomNavigation(navController: NavHostController) {
     BottomAppBar {
         val backStackEntry by navController.currentBackStackEntryAsState()
         val route = backStackEntry?.destination?.route
-        pages.forEach { it ->
+        pages.forEach {
             NavigationBarItem(
                 icon = { Icon(it.icon, null) },
                 label = { Text(it.title) },
