@@ -41,7 +41,7 @@ fun AdminPagePreview() {
         AdminPage()
     }
 }
-
+@Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable

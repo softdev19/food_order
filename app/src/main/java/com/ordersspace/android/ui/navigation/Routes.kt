@@ -22,11 +22,15 @@ object CustomerRoutes {
 }
 
 object EmployeeRoutes {
-
     const val main = "/employee"
 
     const val shift = "$main/shift"
 
     const val orders = "$main/orders"
     const val status = "$orders/status"
+}
+object AdminRoutes{
+    const val admin = "/admin"
+    const val networks = "$admin/networks"
+    const val menu = "$admin/menu"
 }
