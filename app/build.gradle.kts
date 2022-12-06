@@ -51,7 +51,7 @@ android {
 dependencies {
     val composeVersion: String by rootProject.extra
     val ktorVersion: String by rootProject.extra
-    implementation ("io.coil-kt:coil-compose:1.4.0")
+    implementation("io.coil-kt:coil-compose:1.4.0")
     implementation("io.ktor:ktor-client-auth:$ktorVersion")
     implementation("androidx.compose.material:material-icons-extended:$composeVersion")
     implementation ("androidx.navigation:navigation-compose:$composeVersion")

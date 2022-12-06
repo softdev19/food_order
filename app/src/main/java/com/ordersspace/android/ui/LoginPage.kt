@@ -1,23 +1,17 @@
 package com.ordersspace.android.ui
 
 import android.annotation.SuppressLint
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ordersspace.android.R
-import com.ordersspace.android.model.Client
 import com.ordersspace.android.ui.theme.OrdersSpaceTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -99,7 +93,7 @@ fun login(
     controller: NavController,
 ) {
     scope.launch {
-        Client.addUser(name, phone, email)
+//        Client.addUser(name, phone, email)
         controller.navigate(MainPage.route)
     }
 }
