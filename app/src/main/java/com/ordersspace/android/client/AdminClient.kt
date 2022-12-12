@@ -1,6 +1,5 @@
 package com.ordersspace.android.client
 
-import android.util.Log
 import com.ordersspace.android.model.Admin
 import com.ordersspace.android.model.MenuItem
 import com.ordersspace.android.model.Network
@@ -36,7 +35,7 @@ class AdminClient(name: String, password: String) : Client<Admin>(name, password
 
     override suspend fun authenticate(): Admin? = getObject("$baseUrl/auth")
 
-    override suspend fun register(
+    override suspend fun signup(
         phone: String?,
         email: String?,
     ): Admin? {
@@ -46,7 +45,6 @@ class AdminClient(name: String, password: String) : Client<Admin>(name, password
             parameter("phone", phone)
             parameter("email", email)
         }
-        Log.d("OS",response.status.description)
         if (response.status != OK) return null
         return response.body<Admin>()
     }
