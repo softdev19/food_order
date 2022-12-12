@@ -2,6 +2,10 @@
 
 package com.ordersspace.android.ui.customer
 
+import android.view.Menu
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -13,13 +17,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
+import com.ordersspace.android.R
+import com.ordersspace.android.model.ItemType
+import com.ordersspace.android.ui.theme.MenuItem
 import com.ordersspace.android.ui.theme.OrdersSpaceTheme
 import kotlinx.coroutines.launch
 
@@ -45,16 +54,31 @@ fun MainMenu(navController: NavHostController) {
         }
     ) { padding ->
         val pagerState = rememberPagerState(3)
+        val item = MenuItem(
+            id = 0UL,
+            name = "guber",
+            type = MenuItem.ItemType.DISH,
+            cost = 69.99,
+            weight = 69.99,
+            volume = 69.99,
+            description = "best food ever",
+            isAgeRestricted = false,
+            imageUrl = "https://media.discordapp.net/attachments/886662838322614364/1049644538500747314/image.png",
+            networkId = 0UL,
+        )
         Column(
             modifier = Modifier
                 .padding(padding)
                 .fillMaxSize()
         ) {
             CategoryTabs(pagerState)
-            CategoryItems(pagerState)
+            CategoryItems(
+                pagerState, item
+            )
         }
     }
 }
+
 
 @Composable
 fun CategoryTabs(pagerState: PagerState) {
@@ -79,16 +103,36 @@ fun CategoryTabs(pagerState: PagerState) {
 }
 
 @Composable
-fun CategoryItems(pagerState: PagerState) {
+fun CategoryItems(pagerState: PagerState, item: MenuItem) {
     HorizontalPager(
         state = pagerState,
         modifier = Modifier.fillMaxWidth()
     ) { index ->
-        LazyColumn(modifier = Modifier
-            .fillMaxWidth()
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
         ) {
             items(100, key = { it }) {
-                Text("LOL")
+                OutlinedCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .background(
+                            MaterialTheme.colorScheme.surfaceVariant,
+                            shape = CardDefaults.shape
+                        )
+                        .padding(16.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.item),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .aspectRatio(1.78f)
+                            .fillMaxWidth()
+                    )
+                    Text(text = item.name, style = MaterialTheme.typography.headlineMedium)
+                    Text(text = item.description.orEmpty())
+                }
             }
         }
     }

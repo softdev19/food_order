@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.ordersspace.android.R
+import com.ordersspace.android.client.ClientStorage
 import com.ordersspace.android.model.Network
 import com.ordersspace.android.model.Place
 import com.ordersspace.android.ui.theme.OrdersSpaceTheme
@@ -70,6 +71,7 @@ fun PlacesPage(controller: NavController? = null, places: List<Place>) {
             }
         }
     }
+
 
 
 }

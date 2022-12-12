@@ -32,5 +32,6 @@ object EmployeeRoutes {
 object AdminRoutes{
     const val admin = "/admin"
     const val networks = "$admin/networks"
+    const val network = "$networks/{id}"
     const val menu = "$admin/menu"
 }

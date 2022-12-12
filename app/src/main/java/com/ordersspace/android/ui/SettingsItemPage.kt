@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.ordersspace.android.ui.theme.Item
 import com.ordersspace.android.ui.theme.OrdersSpaceTheme
 import io.ktor.http.*
 

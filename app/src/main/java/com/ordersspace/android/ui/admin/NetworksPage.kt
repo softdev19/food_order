@@ -5,34 +5,30 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
-import coil.request.ImageRequest
-import com.ordersspace.android.R
+import com.ordersspace.android.client.ClientStorage
 import com.ordersspace.android.model.Network
-import com.ordersspace.android.ui.AdminPage
-import com.ordersspace.android.ui.navigation.CustomerRoutes.place
+import com.ordersspace.android.ui.navigation.AdminRoutes
 import com.ordersspace.android.ui.theme.OrdersSpaceTheme
-import java.util.jar.Attributes.Name
 
-val networks = listOf(
+@Preview(showSystemUi = true, name = "Networks Page")
+@Composable
+fun NetworksPagePreview() {
+    OrdersSpaceTheme {
+        NetworksPage()
+    }
+}
+
+val mockNetworks = listOf(
     Network(
         1UL,
         "hello",
@@ -41,30 +37,33 @@ val networks = listOf(
         0UL,
     ),
 )
-@Preview(showSystemUi = true, name = "Networks Page")
-@Composable
-fun NetworksPagePreview() {
-    OrdersSpaceTheme {
-        NetworksPage(networks = networks)
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun NetworksPage(controller: NavController? = null, networks: List<Network>) {
-    val navController = rememberNavController()
-    Scaffold(topBar = {
-        CenterAlignedTopAppBar(title = { Text(text = "Ваши сети") })
-    }, floatingActionButton = {
-        FloatingActionButton(
-            onClick = { /* ... */ },
+fun NetworksPage(controller: NavController? = null) {
+    val networks = remember {
+        mutableStateListOf<Network>()
+    }
+    val admin = ClientStorage.admin
+    LaunchedEffect(key1 = admin) {
+        networks.addAll(admin?.getNetworks() ?: mockNetworks)
+    }
 
-            ) {
-            FabPosition.Center
-            Icon(Icons.Filled.Add, "Localized description")
-        }
-    },) { padding ->
+    val navController = rememberNavController()
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(title = { Text(text = "Ваши сети") })
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { controller?.navigate(AdminRoutes.networks + "/-1") },
+                ) {
+                FabPosition.Center
+                Icon(Icons.Filled.Add, "Localized description")
+            }
+        },
+    ) { padding ->
         LazyColumn(modifier = Modifier.padding(padding)) {
             items(networks, { it.id.toLong() }) { network ->
                 NetworkCard(network)
@@ -79,23 +78,22 @@ fun NetworksPage(controller: NavController? = null, networks: List<Network>) {
 @Composable
 fun NetworkCard(network: Network) {
     OutlinedCard(
-        onClick = { /* Do something */ }, modifier = Modifier.fillMaxWidth()
-
+        onClick = { /* Do something */ }, modifier = Modifier.fillMaxWidth().padding(16.dp)
     ) {
 
         Box() {
             Column() {
-                Text(text = network.name)
+                Text(text = network.name, modifier = Modifier.padding(16.dp))
                 Image(
                     painter = rememberImagePainter(network.imageUrl),
                     contentDescription = "Описание"
                 )
-                Text(text = network.description)
+                Text(text = network.description,modifier = Modifier.padding(16.dp))
             }
         }
     }
-
 }
+
 
 
 

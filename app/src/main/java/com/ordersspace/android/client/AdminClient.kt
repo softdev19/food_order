@@ -1,5 +1,6 @@
 package com.ordersspace.android.client
 
+import android.util.Log
 import com.ordersspace.android.model.Admin
 import com.ordersspace.android.model.MenuItem
 import com.ordersspace.android.model.Network
@@ -39,12 +40,13 @@ class AdminClient(name: String, password: String) : Client<Admin>(name, password
         phone: String?,
         email: String?,
     ): Admin? {
-        val response = client.post("$baseUrl/register") {
+        val response = client.post("$baseUrl/signup") {
             parameter("name", name)
             parameter("password", password)
             parameter("phone", phone)
             parameter("email", email)
         }
+        Log.d("OS",response.status.description)
         if (response.status != OK) return null
         return response.body<Admin>()
     }

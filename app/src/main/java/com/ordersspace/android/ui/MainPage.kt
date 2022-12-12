@@ -1,17 +1,25 @@
 package com.ordersspace.android.ui
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.ordersspace.android.R
+
 import com.ordersspace.android.ui.theme.OrdersSpaceTheme
 
 @Composable
@@ -35,7 +43,14 @@ fun MainPage() {
     val navController = rememberNavController()
     Scaffold(
 
-        bottomBar = { BottomNavigation(navController) },
+        bottomBar = { BottomNavigation(navController,) },
+        topBar = {
+            CenterAlignedTopAppBar(title = {
+                Text(
+                    text = "Меню"
+                )
+            })
+        }
     ) { padding ->
         Box(modifier = Modifier.padding(padding)) {
             Navigation(navController)
@@ -44,7 +59,7 @@ fun MainPage() {
 }
 
 @Composable
-fun BottomNavigation(navController: NavHostController) {
+fun BottomNavigation(navController: NavHostController,) {
     BottomAppBar {
         val backStackEntry by navController.currentBackStackEntryAsState()
         val route = backStackEntry?.destination?.route
@@ -75,9 +90,6 @@ fun Navigation(navController: NavHostController) {
     ) {
         composable(NavigationPage.MapPage.route) {
             MapPage()
-        }
-        composable(NavigationPage.MenuPage.route) {
-            MenuPage()
         }
         composable(NavigationPage.ProfilePage.route) {
             ProfilePage()

@@ -11,9 +11,9 @@ abstract class Client<U : User>(val name: String, val password: String) {
 
     protected abstract val client: HttpClient
 
-    protected abstract suspend fun authenticate(): U?
+     abstract suspend fun authenticate(): U?
 
-    protected abstract suspend fun register(phone: String?, email: String?): U?
+     abstract suspend fun register(phone: String?, email: String?): U?
 
     protected suspend inline fun <reified T> getObject(path: String): T? {
         val response = client.get(path)
