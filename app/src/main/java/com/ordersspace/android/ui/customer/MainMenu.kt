@@ -9,6 +9,7 @@ import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.AddShoppingCart
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.SetMeal
 import androidx.compose.material.icons.outlined.ShoppingCart
@@ -27,7 +28,6 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import com.ordersspace.android.R
-import com.ordersspace.android.model.ItemType
 import com.ordersspace.android.ui.theme.MenuItem
 import com.ordersspace.android.ui.theme.OrdersSpaceTheme
 import kotlinx.coroutines.launch
@@ -113,14 +113,11 @@ fun CategoryItems(pagerState: PagerState, item: MenuItem) {
                 .fillMaxWidth()
         ) {
             items(100, key = { it }) {
-                OutlinedCard(
+                Card(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
-                        .background(
-                            MaterialTheme.colorScheme.surfaceVariant,
-                            shape = CardDefaults.shape
-                        )
+                        .background(MaterialTheme.colorScheme.surfaceVariant, shape = CardDefaults.shape)
                         .padding(16.dp)
                 ) {
                     Image(
@@ -130,8 +127,16 @@ fun CategoryItems(pagerState: PagerState, item: MenuItem) {
                             .aspectRatio(1.78f)
                             .fillMaxWidth()
                     )
-                    Text(text = item.name, style = MaterialTheme.typography.headlineMedium)
-                    Text(text = item.description.orEmpty())
+                    Row(){
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(text = item.name, style = MaterialTheme.typography.headlineMedium)
+                            Text(text = item.description.orEmpty())
+                        }
+                        IconButton(onClick = { /*TODO*/ }) {
+                            Icon(Icons.Outlined.AddShoppingCart, "Добавить")
+                        }
+                    }
+
                 }
             }
         }

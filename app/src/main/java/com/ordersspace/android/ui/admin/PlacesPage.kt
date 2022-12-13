@@ -72,8 +72,6 @@ fun PlacesPage(controller: NavController? = null, places: List<Place>) {
         }
     }
 
-
-
 }
 
 

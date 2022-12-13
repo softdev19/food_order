@@ -14,8 +14,11 @@ import androidx.navigation.NavController
 import com.ordersspace.android.R
 import com.ordersspace.android.client.AdminClient
 import com.ordersspace.android.client.ClientStorage
+import com.ordersspace.android.client.CustomerClient
+import com.ordersspace.android.client.CustomerStorage
 import com.ordersspace.android.ui.navigation.AdminRoutes
 import com.ordersspace.android.ui.navigation.CommonRoutes
+import com.ordersspace.android.ui.navigation.CustomerRoutes
 import com.ordersspace.android.ui.theme.OrdersSpaceTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -42,7 +45,7 @@ fun LoginPage(controller: NavController? = null) {
             FloatingActionButton(
                 onClick = {
                     if (controller != null) {
-                        adminlogin(name, password, scope ,controller)
+                        adminlogin(name, password, scope, controller)
                     }
                 },
 
@@ -93,13 +96,17 @@ fun LoginPage(controller: NavController? = null) {
             )
             Button(
                 onClick = {
+                    if (controller != null) {
+                        customerlogin(name, password, scope, controller)
+                    }
                 }, modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "Войти")
             }
 
             Button(
-                onClick = {controller?.navigate(CommonRoutes.signup)
+                onClick = {
+                    controller?.navigate(CommonRoutes.signup)
                 }, modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "Регистрация")
@@ -123,19 +130,16 @@ fun adminlogin(
     }
 }
 
-fun login(
+fun customerlogin(
     name: String,
-    phone: String?,
-    email: String?,
+    password: String,
     scope: CoroutineScope,
     controller: NavController,
 ) {
     scope.launch {
-//        Client.addUser(name, phone, email)
-        controller.navigate(MainPage.route)
+        val customerClient = CustomerClient(name, password)
+        CustomerStorage.customer = customerClient
+        val customer = customerClient.authenticate() ?: return@launch
+        controller.navigate(CustomerRoutes.main)
     }
-}
-
-object LoginPage {
-    const val route = "/login"
 }

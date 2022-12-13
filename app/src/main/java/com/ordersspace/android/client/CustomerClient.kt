@@ -79,7 +79,6 @@ class CustomerClient(name: String, password: String) : Client<Customer>(name, pa
     }
 
     companion object {
-
         private const val baseUrl = "${Client.baseUrl}/customer"
     }
 }

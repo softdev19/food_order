@@ -20,7 +20,10 @@ import androidx.navigation.NavController
 import com.ordersspace.android.R
 import com.ordersspace.android.client.AdminClient
 import com.ordersspace.android.client.ClientStorage
+import com.ordersspace.android.client.CustomerClient
+import com.ordersspace.android.client.CustomerStorage
 import com.ordersspace.android.ui.navigation.AdminRoutes
+import com.ordersspace.android.ui.navigation.CustomerRoutes
 import com.ordersspace.android.ui.theme.OrdersSpaceTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -32,7 +35,6 @@ fun AuthPagePreview() {
         AuthPage()
     }
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -79,7 +81,16 @@ fun AuthPage(navController: NavController? = null) {
 
 
         Button(
-            onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth(), enabled = true
+            onClick = { if (navController != null) {
+                customerAuth(
+                    name,
+                    password,
+                    phone.takeIf { it.isNotEmpty() },
+                    email.takeIf { it.isNotEmpty() },
+                    scope,
+                    navController,
+                )
+            } }, modifier = Modifier.fillMaxWidth(), enabled = true
         ) {
             Text(text = "Зарегистрироваться")
         }
@@ -116,12 +127,26 @@ fun adminAuth(
         val adminClient = AdminClient(name, password)
         ClientStorage.admin = adminClient
         Log.d("OS","Registering admin")
-        val admin = adminClient.register(phone, email) ?: return@launch
+        val admin = adminClient.signup(phone, email) ?: return@launch
         Log.d("OS","Registered admin")
         controller.navigate(AdminRoutes.networks)
     }
 }
-
-object AuthPage {
-    const val route = "/auth"
+fun customerAuth(
+    name: String,
+    password: String,
+    phone: String?,
+    email: String?,
+    scope: CoroutineScope,
+    controller: NavController,
+) {
+    scope.launch {
+        val customerClient = CustomerClient(name, password)
+        CustomerStorage.customer = customerClient
+        Log.d("OS","Registering customer")
+        val custromer = customerClient.signup(phone, email) ?: return@launch
+        Log.d("OS","Registered custromer")
+        controller.navigate(CustomerRoutes.main)
+    }
 }
+

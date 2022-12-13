@@ -32,14 +32,8 @@ class MainActivity : ComponentActivity() {
                     composable(route = CustomerRoutes.main) {
                         CustomerMain(controller)
                     }
-                    composable(route = LoginPage.route) {
-                        LoginPage(controller)
-                    }
                     composable(route = MainPage.route) {
                         MainPage()
-                    }
-                    composable(route = AuthPage.route) {
-                        AuthPage(controller)
                     }
                     composable(route = AdminMenuPage.route) {
                         AdminMenuPage(controller)
