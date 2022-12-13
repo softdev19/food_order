@@ -15,6 +15,7 @@ object CustomerRoutes {
     const val menu = "$main/menu"
     const val place = "$menu/place"
     const val item = "$menu/item"
+    const val cart = "$menu/cart"
     const val checkout = "$menu/checkout"
 
     const val profile = "$main/profile"

@@ -56,7 +56,9 @@ class MainActivity : ComponentActivity() {
                     composable(route = CommonRoutes.signup) {
                        AuthPage (controller)
                     }
-
+                    composable(route = CustomerRoutes.cart) {
+                        Basket(controller)
+                    }
                 }
             }
         }

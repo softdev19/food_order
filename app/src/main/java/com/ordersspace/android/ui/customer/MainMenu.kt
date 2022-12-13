@@ -28,6 +28,7 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import com.ordersspace.android.R
+import com.ordersspace.android.ui.navigation.CustomerRoutes
 import com.ordersspace.android.ui.theme.MenuItem
 import com.ordersspace.android.ui.theme.OrdersSpaceTheme
 import kotlinx.coroutines.launch
@@ -46,7 +47,7 @@ fun MainMenu(navController: NavHostController) {
                     IconButton(onClick = { /*TODO*/ }) {
                         Icon(Icons.Outlined.Search, "Поиск")
                     }
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = { navController.navigate(CustomerRoutes.cart) }) {
                         Icon(Icons.Outlined.ShoppingCart, "Корзина")
                     }
                 },
