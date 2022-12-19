@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.ordersspace.android.ui.customer
+package com.ordersspace.android.ui.admin
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -17,16 +17,16 @@ import com.ordersspace.android.ui.navigation.Route
 import com.ordersspace.android.ui.theme.OrdersSpaceTheme
 
 @Composable
-fun CustomerMain(navController: NavHostController) {
+fun AdminMain(navController: NavHostController) {
     val bottomNavController = rememberNavController()
 
-    Scaffold(bottomBar = { BottomAppBar(Route.customerMainPages, bottomNavController) }) {
+    Scaffold(bottomBar = { BottomAppBar(Route.adminMainPages, bottomNavController) }) {
         Box(Modifier.padding(it)) {
-            BottomNavContent(Route.customerMainPages, navController, bottomNavController)
+            BottomNavContent(Route.adminMainPages, navController, bottomNavController)
         }
     }
 }
 
 @Composable
 @Preview(showSystemUi = true)
-fun CustomerMainPreview() = OrdersSpaceTheme { CustomerMain(rememberNavController()) }
+fun AdminMainPreview() = OrdersSpaceTheme { AdminMain(rememberNavController()) }

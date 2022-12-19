@@ -13,19 +13,19 @@ data class Order(
     val timestamp: Long,
 ) {
 
-    enum class Status {
+    enum class Status(val displayName: String) {
         /** Создан, но еще не оплачен */
-        CREATED,
+        CREATED("Создан"),
         /** Оплачен */
-        PAID,
+        PAID("Оплачен"),
         /** Готовится */
-        PREPARING,
+        PREPARING("Готовится"),
         /** Готов (на кассе или еще не дошел до доставки) */
-        READY,
+        READY("Готов"),
         /** В доставке (если нужно) */
-        DELIVERED,
+        DELIVERED("В доставке"),
         /** Получен, закрыт */
-        RECEIVED;
+        RECEIVED("Получен");
 
         companion object {
 

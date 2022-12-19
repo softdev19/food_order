@@ -1,4 +1,4 @@
-package com.ordersspace.android.ui
+package com.ordersspace.android.ui.customer
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

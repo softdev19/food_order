@@ -16,8 +16,12 @@ data class MenuItem(
     val networkId: ULong,
 ) {
 
-    enum class ItemType {
-        GOODS, DISH, PREPARED, SERVICE, RATE;
+    enum class ItemType(val displayName: String) {
+        GOODS("Товар"),
+        DISH("Блюдо"),
+        PREPARED("Заготовка"),
+        SERVICE("Услуга"),
+        RATE("Оценка (?)");
 
         companion object {
 

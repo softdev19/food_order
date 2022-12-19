@@ -1,27 +1,23 @@
-package com.ordersspace.android.ui
+@file:OptIn(ExperimentalMaterial3Api::class)
 
-import android.annotation.SuppressLint
-import androidx.compose.material.Scaffold
+package com.ordersspace.android.ui.customer
+
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.ordersspace.android.ui.Defaults
 import com.ordersspace.android.ui.theme.OrdersSpaceTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun Basket(controller: NavHostController? = null) {
+fun CartPage(controller: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                navigationIcon = {
-                    IconButton(onClick = { controller?.popBackStack() }) {
-                        Icon(Icons.Outlined.ArrowBack, "Назад")
-                    }
-                },
+                navigationIcon = { Defaults.BackButton(controller::popBackStack) },
                 title = { Text("Корзина") },
                 actions = {
 
@@ -31,15 +27,14 @@ fun Basket(controller: NavHostController? = null) {
                 },
             )
         }
-    )
-    {
-
+    ) {
+        it
     }
 }
 @Preview(showSystemUi = true)
 @Composable
-fun BasketPreview() {
+fun CartPagePreview() {
     OrdersSpaceTheme {
-        Basket()
+        CartPage(rememberNavController())
     }
 }

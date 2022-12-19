@@ -2,12 +2,9 @@
 
 package com.ordersspace.android.ui.customer
 
-import android.view.Menu
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AddShoppingCart
 import androidx.compose.material.icons.outlined.Search
@@ -16,29 +13,29 @@ import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
-import com.ordersspace.android.R
+import com.ordersspace.android.model.MenuItem
 import com.ordersspace.android.ui.navigation.CustomerRoutes
-import com.ordersspace.android.ui.theme.MenuItem
 import com.ordersspace.android.ui.theme.OrdersSpaceTheme
 import kotlinx.coroutines.launch
 
 @Composable
-fun MainMenu(navController: NavHostController) {
+fun MenuPage(navController: NavHostController) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     Scaffold(
-        modifier = Modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopAppBar(
                 scrollBehavior = scrollBehavior,
@@ -48,23 +45,26 @@ fun MainMenu(navController: NavHostController) {
                         Icon(Icons.Outlined.Search, "Поиск")
                     }
                     IconButton(onClick = { navController.navigate(CustomerRoutes.cart) }) {
-                        Icon(Icons.Outlined.ShoppingCart, "Корзина")
+                        BadgedBox(badge = { Badge { Text("0") } }) {
+                            Icon(Icons.Outlined.ShoppingCart, "Корзина")
+                        }
                     }
                 },
             )
         }
     ) { padding ->
         val pagerState = rememberPagerState(3)
+
         val item = MenuItem(
             id = 0UL,
-            name = "guber",
+            name = "Бургургер",
             type = MenuItem.ItemType.DISH,
             cost = 69.99,
             weight = 69.99,
             volume = 69.99,
             description = "best food ever",
             isAgeRestricted = false,
-            imageUrl = "https://media.discordapp.net/attachments/886662838322614364/1049644538500747314/image.png",
+            imageUrl = "https://i.imgur.com/L5IhOun.png",
             networkId = 0UL,
         )
         Column(
@@ -79,7 +79,6 @@ fun MainMenu(navController: NavHostController) {
         }
     }
 }
-
 
 @Composable
 fun CategoryTabs(pagerState: PagerState) {
@@ -113,41 +112,48 @@ fun CategoryItems(pagerState: PagerState, item: MenuItem) {
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            items(100, key = { it }) {
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                        .background(MaterialTheme.colorScheme.surfaceVariant, shape = CardDefaults.shape)
-                        .padding(16.dp)
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.item),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .aspectRatio(1.78f)
-                            .fillMaxWidth()
-                    )
-                    Row(){
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text(text = item.name, style = MaterialTheme.typography.headlineMedium)
-                            Text(text = item.description.orEmpty())
-                        }
-                        IconButton(onClick = { /*TODO*/ }) {
-                            Icon(Icons.Outlined.AddShoppingCart, "Добавить")
-                        }
-                    }
+            items(5, key = { it }) {
+                ItemCard(item, onClick = { /* TODO: navigate to item page */ })
+            }
+        }
+    }
+}
 
+@Composable
+fun ItemCard(item: MenuItem, onClick: () -> Unit) {
+    Card(
+        onClick,
+        Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+    ) {
+        Column(Modifier.padding(16.dp)) {
+            AsyncImage(
+                model = item.imageUrl,
+                contentDescription = "Товар",
+                modifier = Modifier
+                    .aspectRatio(1.78f)
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(8.dp)),
+                placeholder = ColorPainter(Color(0, 0, 0, 20)),
+            )
+            Box(Modifier.height(8.dp))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = item.name,
+                    modifier = Modifier.weight(1f),
+                    style = MaterialTheme.typography.headlineMedium,
+                )
+                TextButton(onClick = { /* TODO: add to cart */ }) {
+                    Icon(Icons.Outlined.AddShoppingCart, "Добавить в корзину")
+                    Box(modifier = Modifier.width(8.dp))
+                    Text(item.cost.toString())
                 }
             }
         }
     }
 }
 
-@Preview(showSystemUi = true)
 @Composable
-fun MainMenuPreview() {
-    OrdersSpaceTheme {
-        MainMenu(rememberNavController())
-    }
-}
+@Preview(showSystemUi = true)
+fun MenuPagePreview() = OrdersSpaceTheme { MenuPage(rememberNavController()) }
