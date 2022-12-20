@@ -2,14 +2,13 @@
 
 package com.ordersspace.android.ui.customer
 
+import android.content.ClipData
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AddShoppingCart
-import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material.icons.outlined.SetMeal
-import androidx.compose.material.icons.outlined.ShoppingCart
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -27,6 +26,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
+import com.ordersspace.android.model.Cart
 import com.ordersspace.android.model.MenuItem
 import com.ordersspace.android.ui.navigation.CustomerRoutes
 import com.ordersspace.android.ui.theme.OrdersSpaceTheme
@@ -101,6 +101,9 @@ fun CategoryTabs(pagerState: PagerState) {
         }
     }
 }
+object counter{
+    val cart = mapOf<ULong,Int>()
+}
 
 @Composable
 fun CategoryItems(pagerState: PagerState, item: MenuItem) {
@@ -120,7 +123,7 @@ fun CategoryItems(pagerState: PagerState, item: MenuItem) {
 }
 
 @Composable
-fun ItemCard(item: MenuItem, onClick: () -> Unit) {
+fun ItemCard(item: MenuItem, onClick: () -> Unit,) {
     Card(
         onClick,
         Modifier
@@ -144,10 +147,24 @@ fun ItemCard(item: MenuItem, onClick: () -> Unit) {
                     modifier = Modifier.weight(1f),
                     style = MaterialTheme.typography.headlineMedium,
                 )
-                TextButton(onClick = { /* TODO: add to cart */ }) {
+                IconButton(onClick = { Cart += item.id }, Modifier.background(
+                    Color.Transparent),) {
+                    Icon(Icons.Outlined.Add, "Увеличить на 1",Modifier.size(12.dp))
+                }
+                Text(Cart[item.id].toString())
+                IconButton(onClick = { Cart -= item.id }, Modifier.background(
+                    Color.Transparent),) {
+                   Icon (Icons.Outlined.Remove, "Уменьшить на 1",Modifier.size(12.dp))
+                }
+                TextButton(onClick = {Cart += item.id }) {
                     Icon(Icons.Outlined.AddShoppingCart, "Добавить в корзину")
                     Box(modifier = Modifier.width(8.dp))
                     Text(item.cost.toString())
+                }
+                if (item.id in Cart) {
+                    Cart[item.id]
+                } else {
+                    Cart += item.id
                 }
             }
         }

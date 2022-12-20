@@ -1,6 +1,7 @@
 package com.ordersspace.android.client
 
 import com.ordersspace.android.model.Customer
+import com.ordersspace.android.model.MenuItem
 import com.ordersspace.android.model.Order
 import io.ktor.client.*
 import io.ktor.client.call.*
@@ -77,6 +78,10 @@ class CustomerClient(name: String, password: String) : Client<Customer>(name, pa
         if (response.status != OK) return null
         return response.body<Order>()
     }
+
+    suspend fun getMenuItem(
+        id: ULong
+    ): MenuItem? = getObject("$baseUrl/menu/$id")
 
     companion object {
         private const val baseUrl = "${Client.baseUrl}/customer"
