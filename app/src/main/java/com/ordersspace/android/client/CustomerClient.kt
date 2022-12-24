@@ -1,16 +1,17 @@
 package com.ordersspace.android.client
 
-import com.ordersspace.android.model.Customer
-import com.ordersspace.android.model.MenuItem
-import com.ordersspace.android.model.Order
+import com.ordersspace.android.model.*
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.plugins.auth.*
 import io.ktor.client.plugins.auth.providers.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
+import io.ktor.http.*
 import io.ktor.http.HttpStatusCode.Companion.OK
 import io.ktor.serialization.kotlinx.json.*
+import io.ktor.util.reflect.*
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
 class CustomerClient(name: String, password: String) : Client<Customer>(name, password) {
@@ -82,6 +83,14 @@ class CustomerClient(name: String, password: String) : Client<Customer>(name, pa
     suspend fun getMenuItem(
         id: ULong
     ): MenuItem? = getObject("$baseUrl/menu/$id")
+
+    suspend fun getMenuItems(): List<MenuItemCard> = getList("$baseUrl/menu")
+
+    suspend fun getCart(
+        ids: List<ULong>,
+    ): List<MenuItemCard> = getList("$baseUrl/cart?ids=${ids.joinToString()}")
+
+    suspend fun getNetworks(): List<Network> = getList("${Client.baseUrl}/networks")
 
     companion object {
         private const val baseUrl = "${Client.baseUrl}/customer"

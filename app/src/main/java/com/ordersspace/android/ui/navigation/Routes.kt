@@ -33,6 +33,7 @@ object CustomerRoutes {
     const val item = "$menu/item"
     const val cart = "$menu/cart"
     const val checkout = "$menu/checkout"
+    const val order = "$menu/order"
 
     const val profile = "$main/profile"
     const val status = "$profile/status"
@@ -49,9 +50,6 @@ object EmployeeRoutes {
     const val status = "$orders/status"
 }
 
-typealias RoutePageWithArgs = @Composable (controller: NavHostController, args: Bundle) -> Unit
-typealias RoutePage = @Composable (controller: NavHostController) -> Unit
-
 object AdminRoutes {
 
     const val main = "/admin"
@@ -64,6 +62,9 @@ object AdminRoutes {
     const val menu = "$network/menu"
     const val editItem = "$menu/{iid}/edit"
 }
+
+typealias RoutePageWithArgs = @Composable (controller: NavHostController, args: Bundle) -> Unit
+typealias RoutePage = @Composable (controller: NavHostController) -> Unit
 
 sealed class Route {
 
@@ -114,7 +115,8 @@ sealed class Route {
             ScreenRoute(CustomerRoutes.cart) { CartPage(it) },
             ScreenRoute(CustomerRoutes.place) { /* TODO: place page */ },
             ScreenRoute(CustomerRoutes.item) { /* TODO: item description page */ },
-            ScreenRoute(CustomerRoutes.checkout) { /* TODO: checkout page */ },
+            ScreenRoute(CustomerRoutes.checkout) { CheckoutPage(it) },
+            ScreenRoute(CustomerRoutes.order) { OrderPage(it) },
             ScreenRoute(CustomerRoutes.status) { /* TODO: order status page */ },
 
             // Admin routes
@@ -154,7 +156,7 @@ sealed class Route {
         )
 
         val adminMainPages = listOf(
-            ScreenPartRoute(AdminRoutes.networks, "Сети", Outlined.Storefront) { NetworksPage(it) }
+            ScreenPartRoute(AdminRoutes.networks, "Сети", Outlined.Storefront) { NetworksPage(it) },
         )
 
         val networkPagePages = listOf(

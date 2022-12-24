@@ -5,7 +5,6 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.HttpStatusCode.Companion.OK
-import kotlinx.serialization.Serializable
 
 abstract class Client<U : User>(val name: String, val password: String) {
 
