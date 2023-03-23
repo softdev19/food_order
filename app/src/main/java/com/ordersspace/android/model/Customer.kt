@@ -1,5 +1,6 @@
 package com.ordersspace.android.model
 
+
 import kotlinx.serialization.Serializable
 
 @Serializable

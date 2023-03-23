@@ -6,6 +6,7 @@ import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.HttpStatusCode.Companion.OK
 
+
 abstract class Client<U : User>(val name: String, val password: String) {
 
     protected abstract val client: HttpClient
